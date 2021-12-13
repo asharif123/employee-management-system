@@ -59,8 +59,21 @@ const employeeManagement = () => {
                     console.table(results);
                 })
                 break;
-//add name of department to the database
+//add new department to the department database
             case "Add Department":
+                inquirer.prompt({
+                    type:'input',
+                    message: 'Enter the department name to add. \n\n',
+                    name: 'addDepartment'
+                }).then((response) => {
+                    db.query(`INSERT INTO department(name) VALUES ("${response.addDepartment}")`, function (err, results) {
+                        console.log(`\n\n${response.addDepartment} has been added to departments!\n`);
+                    })
+                })
+                break;
+
+//add new role to the employee database
+            case "Add Employee":
                 inquirer.prompt({
                     type:'input',
                     message: 'Enter the department name to add. \n\n',
