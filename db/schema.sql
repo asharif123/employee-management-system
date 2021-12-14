@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS employees_management_db;
-CREATE DATABASE employees_management_db;
+DROP DATABASE IF EXISTS employee_management_db;
+CREATE DATABASE employee_management_db;
 
-USE employees_management_db;
+USE employee_management_db;
 
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -31,7 +31,3 @@ CREATE TABLE employee (
   REFERENCES role(id)
   ON DELETE SET NULL
 );
-
-
-
-

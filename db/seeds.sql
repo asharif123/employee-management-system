@@ -1,67 +1,36 @@
-DROP DATABASE IF EXISTS employees_management_db;
-CREATE DATABASE employees_management_db;
-
-USE employees_management_db;
-
-CREATE TABLE department (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(30) NOT NULL
-);
-
-CREATE TABLE role (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(30) NOT NULL,
-  salary DECIMAL NOT NULL,
-  department_id INT,
-  FOREIGN KEY (department_id)
-  REFERENCES department(id)
-  ON DELETE SET NULL
-);
-
-CREATE TABLE employee (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(30) NOT NULL,
-  last_name VARCHAR(30) NOT NULL,
-  role_id INT NULL,
-  manager_id INT NULL,
-  FOREIGN KEY (role_id)
-  REFERENCES role(id)
-  ON DELETE SET NULL,
-  FOREIGN KEY (manager_id)
-  REFERENCES role(id)
-  ON DELETE SET NULL
-);
-
 INSERT INTO department(name)
-VALUES ("SALES"),
-("Engineering"),
-("Finance"),
-("Legal");
+VALUES ("Engineering"),
+("Sales"),
+("Law"),
+("Business"),
+("Management");
 
-INSERT INTO role(title,salary)
-VALUES ("Sales Lead", 100000),
-("Salesperson", 80000),
-("Lead Engineer", 150000),
-("Software Engineer", 120000),
-("Account Manager", 120000),
-("Accountant", 125000),
-("Legal Team Lead", 250000),
-("Lawyer", 250000);
-
-INSERT INTO employee(first_name,last_name)
-VALUES ("John", "Doe"),
-("Mike", "Chan"),
-("Ashley", "Rodriguez"),
-("Awad", "Sharif"),
-("Chad", "Tao"),
-("Malia", "Brown"),
-("Sarah", "Brown"),
-("Tom", "Allen");
-
-SELECT * FROM department;
-SELECT * FROM role;
-SELECT * FROM employee;
+INSERT INTO role(title,salary,department_id)
+VALUES ("Sales Lead", 100000,2),
+("Salesperson", 80000,2),
+("Lead Engineer", 150000,1),
+("Software Engineer", 120000,1),
+("Manager", 220000,5),
+("Accountant", 125000,4),
+("Legal Team Lead", 250000,3),
+("Lawyer", 250000,3),
+("Front End Developer", 90000,1),
+("Backend Developer", 100000,1),
+("Fullstack developer", 120000,1);
 
 
-
-
+INSERT INTO employee(first_name,last_name,role_id,manager_id)
+VALUES ("John", "Doe",1,5),
+("Mike", "Chan",2,5),
+("Awad", "Sharif",3,5),
+("Chad", "Tao",5,5),
+("Ashley", "Rodriguez",5,6),
+("Malia", "Brown",3,6),
+("Sarah", "Brown",5,7),
+("Tom", "Allen",4,6),
+("Patricia", "Anderson", 6,5),
+("Hanna", "Joy", 7,6),
+("Adam", "Scott", 8,6),
+("Mitchell", "Michaels", 9,7),
+("Donny", "Jackson", 10,7),
+("Jason", "Newell" ,11,7);
