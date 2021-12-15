@@ -27,6 +27,7 @@ const employeeManagement = async () => {
     const employees = await new Promise (resolve => db.query("SELECT * FROM employee", function(err,res) {
         resolve(res)    
     }));
+    console.log("EMPLOYEES", employees);
 
     // console.log("EMPLOYEES", employees);
 
@@ -147,7 +148,7 @@ const employeeManagement = async () => {
                     })
                 })
                 break;
-// select an employee to update and their new role
+// select an employee to update their new role
             case "Update Employee Role":
                 inquirer.prompt([{
                     type:'list',
@@ -162,7 +163,11 @@ const employeeManagement = async () => {
                     name: 'updateEmployeeRole',
                     choices: roles.map(item => ({name: item.title, value: item.id}))
                  }]).then((response) => {
-
+                     console.log("UPDATED RESPONSE", response.updateEmployeeRole);
+                     console.log("ORIGINAL RESPONSE", response.updateEmployee);
+                    db.query(`UPDATE employee SET employee.role_id = ${response.updateEmployeeRole} WHERE employee.id = ${response.updateEmployee};)`, function (err, results) {
+                        respond(() => console.log('New employee has been added to the database!'));
+                    })
                  })
                 break;
 
