@@ -22,4 +22,4 @@ The following video demos functionality on how to utilize the employee managemen
 
 The user is initially presented to the main webpage with the option to view, add employee/department/role, or to update an existing role for a corresponding user.
 
-![alt-text](./public/assets/images/employee-management-pic-1.JPG "main-page-1")
+![alt-text](./assets/images/employee-management-pic-1.JPG "main-page-1")
