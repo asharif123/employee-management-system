@@ -54,7 +54,7 @@ const employeeManagement = async () => {
         switch(response.choice) {
 // show all the employees if user selected "View All Employees"
             case "View All Employees":
-                db.query("SELECT employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary FROM employee INNER JOIN role ON employee.role_id = role.id ", function (err, results) {
+                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
                     respond(() => console.table(results));
                 })
                 break;
@@ -161,6 +161,7 @@ const employeeManagement = async () => {
                     type:'list',
                     message: 'Which role do you want to assign to the selected employee? \n\n',
                     name: 'updateEmployeeRole',
+                    // note: value we pass is item.id corresponding to name selection
                     choices: roles.map(item => ({name: item.title, value: item.id}))
                  }]).then((response) => {
                      console.log("UPDATED RESPONSE", response.updateEmployeeRole);
