@@ -31,7 +31,7 @@ const employeeManagement = async () => {
         resolve(res)    
     }));
 
-    //user can selec to view employees, add employee, update, view all roles, add role, view all departments, add department
+    //user can select to view employees, add employee, update, view all roles, add role, view all departments, add department
     inquirer.prompt([
         {
             message: "Welcome! What do you want to do?",
@@ -45,11 +45,11 @@ const employeeManagement = async () => {
 // use switch statement to create conditions based off specific user choice
         
         switch(response.choice) {
+
 // show all the employees if user selected "View All Employees"
 //join employee with role to see first name, last name, title, salary and department name
-//LEFT JOIN appends everything from left side, since we are left joining role, we can reference the manager
             case "View All Employees":
-                db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;", function (err, results) {
+                db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee INNER JOIN role on employee.role_id = role.id INNER JOIN department on role.department_id = department.id INNER JOIN employee manager on manager.id = employee.manager_id;", function (err, results) {
                     // console.log(err)
                     respond(() => console.table(results));
                 })
