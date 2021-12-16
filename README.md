@@ -16,4 +16,4 @@ This was created using Javascript, Inquirer library to take inputs from the user
 
 The following video demos functionality on how to utilize the employee management system program.
 
-![screen-recorder-tue-nov-30-2021-17-09-46](./assets/images/screen-recorder-tue-nov-30-2021-17-09-46.gif)
+![screen-recorder-thu-dec-16-2021-14-46-14](./assets/images/screen-recorder-thu-dec-16-2021-14-46-14.gif)
