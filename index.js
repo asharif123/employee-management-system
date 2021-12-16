@@ -54,7 +54,7 @@ const employeeManagement = async () => {
         switch(response.choice) {
 // show all the employees if user selected "View All Employees"
             case "View All Employees":
-                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
+                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary, role.department_id AS department FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
                     respond(() => console.table(results));
                 })
                 break;
@@ -108,7 +108,7 @@ const employeeManagement = async () => {
                 ]).then((response) => {
                     db.query(`INSERT INTO role(title,salary,department_id) VALUES ("${response.addRole}", "${response.addSalary}", "${response.employeeDepartment}")`, function (err, results) {
                         console.log("DEPARMENT ERRORS", err);
-                        respond(() => console.log('New employee has been added to the database!'));
+                        respond(() => console.log('New role has been added to the database!'));
                 })
             })
                 break;
@@ -167,7 +167,7 @@ const employeeManagement = async () => {
                      console.log("UPDATED RESPONSE", response.updateEmployeeRole);
                      console.log("ORIGINAL RESPONSE", response.updateEmployee);
                     db.query(`UPDATE employee SET employee.role_id = ${response.updateEmployeeRole} WHERE employee.id = ${response.updateEmployee};)`, function (err, results) {
-                        respond(() => console.log('New employee has been added to the database!'));
+                        respond(() => console.log('New role for employee has been added to the database!'));
                     })
                  })
                 break;
