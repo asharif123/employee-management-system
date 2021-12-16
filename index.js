@@ -27,16 +27,13 @@ const employeeManagement = async () => {
     const employees = await new Promise (resolve => db.query("SELECT * FROM employee", function(err,res) {
         resolve(res)    
     }));
-    console.log("EMPLOYEES", employees);
-
-    // console.log("EMPLOYEES", employees);
-
     //store all the departments
     const departments = await new Promise (resolve => db.query("SELECT * FROM department", function(err,res) {
         resolve(res)    
     }));
 
-
+    // console.log("EMPLOYEES", employees);
+    // console.log("ROLES", roles);
     // console.log("MANAGERS", managers);
     // console.log("DEPARTMENTS", departments);
     inquirer.prompt([
@@ -54,7 +51,7 @@ const employeeManagement = async () => {
         switch(response.choice) {
 // show all the employees if user selected "View All Employees"
             case "View All Employees":
-                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary, role.department_id AS department FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
+                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
                     respond(() => console.table(results));
                 })
                 break;
@@ -148,7 +145,7 @@ const employeeManagement = async () => {
                     })
                 })
                 break;
-// select an employee to update their new role
+// select an employee to update their new role and grab employee id based off selection
             case "Update Employee Role":
                 inquirer.prompt([{
                     type:'list',
@@ -164,9 +161,10 @@ const employeeManagement = async () => {
                     // note: value we pass is item.id corresponding to name selection
                     choices: roles.map(item => ({name: item.title, value: item.id}))
                  }]).then((response) => {
-                     console.log("UPDATED RESPONSE", response.updateEmployeeRole);
-                     console.log("ORIGINAL RESPONSE", response.updateEmployee);
-                    db.query(`UPDATE employee SET employee.role_id = ${response.updateEmployeeRole} WHERE employee.id = ${response.updateEmployee};)`, function (err, results) {
+                    console.log("ORIGINAL RESPONSE", typeof response.updateEmployee);
+                    console.log("UPDATED RESPONSE", typeof response.updateEmployeeRole);
+                    db.query(`UPDATE employee SET employee.role_id = ${response.updateEmployeeRole} WHERE employee.id = ${response.updateEmployee}`, function (err, results) {
+                        console.log("ERROR", err)
                         respond(() => console.log('New role for employee has been added to the database!'));
                     })
                  })
