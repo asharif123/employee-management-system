@@ -50,7 +50,7 @@ const employeeManagement = async () => {
 //LEFT JOIN appends everything from left side, since we are left joining role, we can reference the manager
             case "View All Employees":
                 db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;", function (err, results) {
-                    console.log(err)
+                    // console.log(err)
                     respond(() => console.table(results));
                 })
                 break;
@@ -71,7 +71,7 @@ const employeeManagement = async () => {
             case "Add Department":
                 inquirer.prompt({
                     type:'input',
-                    message: 'Enter the department name to add. \n\n',
+                    message: 'Select the department to add. \n\n',
                     name: 'addDepartment'
                 }).then((response) => {
                     db.query(`INSERT INTO department(name) VALUES ("${response.addDepartment}")`, function (err, results) {
@@ -132,7 +132,7 @@ const employeeManagement = async () => {
 //give user the option to add existing manager
                  {
                     type:'list',
-                    message: 'Enter the manager of the employee. \n\n',
+                    message: 'Select the manager of the employee. \n\n',
                     name: 'employeeManager',
                     choices: managers.map((item) => ({name: item.first_name + ' ' + item.last_name, value: item.id}))
 
@@ -161,7 +161,7 @@ const employeeManagement = async () => {
                     choices: roles.map(item => ({name: item.title, value: item.id}))
                  }]).then((response) => {
                     db.query(`UPDATE employee SET employee.role_id = ${response.updateEmployeeRole} WHERE employee.id = ${response.updateEmployee}`, function (err, results) {
-                        console.log("ERROR", err)
+                        // console.log("ERROR", err)
                         respond(() => console.log('New role for employee has been added to the database!'));
                     })
                  })
