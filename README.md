@@ -27,3 +27,7 @@ The user is initially presented to the main webpage with the option to view, add
 If the user selects "View All Employees", the user is able to see all the employees in the database based off their names, title, department, salary and who their manager is.
 
 ![alt-text](./assets/images/employee-management-pic-2.JPG "main-page-2")
+
+If the user selects "Add Employee", the user can the employee's first name, last name, select a role from the roles database, and the manager from the managers database.
+
+![alt-text](./assets/images/employee-management-pic-3.JPG "main-page-3")
