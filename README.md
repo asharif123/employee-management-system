@@ -17,3 +17,9 @@ This was created using Javascript, Inquirer library to take inputs from the user
 The following video demos functionality on how to utilize the employee management system program.
 
 ![screen-recorder-thu-dec-16-2021-14-46-14](./assets/images/screen-recorder-thu-dec-16-2021-14-46-14.gif)
+
+# Screenshots of project
+
+The user is initially presented to the main webpage with the option to view, add employee/department/role, or to update an existing role for a corresponding user.
+
+![alt-text](./public/assets/images/employee-management-pic-1.JPG "main-page-1")
