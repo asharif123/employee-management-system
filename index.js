@@ -17,7 +17,6 @@ const employeeManagement = async () => {
     const managers = await new Promise (resolve => db.query("SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS TITLE FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.title='Manager'", function(err,res) {
         resolve(res)
     }));
-    console.log("MANAGERS", managers);
     //store all the roles, used to create dropdown menu allowing user to select a role
     const roles = await new Promise (resolve => db.query("SELECT * FROM role", function(err,res) {
         resolve(res)    
