@@ -12,3 +12,8 @@ Employee Management system is a program that allows one to do the following:
 
 This was created using Javascript, Inquirer library to take inputs from the user, and MySQL2 library to retrive information from SQL databases.
 
+# Demo of Project
+
+The following video demos functionality on how to utilize the employee management system program.
+
+![screen-recorder-tue-nov-30-2021-17-09-46](./assets/images/screen-recorder-tue-nov-30-2021-17-09-46.gif)
