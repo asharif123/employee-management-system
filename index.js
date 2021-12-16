@@ -51,7 +51,7 @@ const employeeManagement = async () => {
         switch(response.choice) {
 // show all the employees if user selected "View All Employees"
             case "View All Employees":
-                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
+                db.query("SELECT employee.id AS ID, employee.first_name AS first_name, employee.last_name AS last_name , role.title AS title, role.salary AS salary, employee.manager_id AS Manager FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY employee.id ", function (err, results) {
                     respond(() => console.table(results));
                 })
                 break;
@@ -95,7 +95,7 @@ const employeeManagement = async () => {
                  },
                  {
                     type:'list',
-                    message: 'Enter the department of the employee. \n\n',
+                    message: 'Which department does the new role belong to? \n\n',
                     name: 'employeeDepartment',
                     //return array of objects and inquirer uses it to select choice that gets stored as id
                     //name is what is displayed, value is id
