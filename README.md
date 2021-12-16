@@ -23,3 +23,7 @@ The following video demos functionality on how to utilize the employee managemen
 The user is initially presented to the main webpage with the option to view, add employee/department/role, or to update an existing role for a corresponding user.
 
 ![alt-text](./assets/images/employee-management-pic-1.JPG "main-page-1")
+
+If the user selects "View All Employees", the user is able to see all the employees in the database based off their names, title, department, salary and who their manager is.
+
+![alt-text](./assets/images/employee-management-pic-2.JPG "main-page-2")
