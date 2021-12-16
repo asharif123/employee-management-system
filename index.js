@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
 
+//connect to mysql database
 const db = mysql.createConnection({
     host:"localhost",
     user: "root",
@@ -8,34 +9,30 @@ const db = mysql.createConnection({
     database: "employee_management_db"
 });
 
-
+//NOTE: employeeManagement() is sync so if passing in db.query, need to make employeeManagement() async
 const employeeManagement = async () => {
     //store all the managers
-    // SELECT *, role.title AS 'Title' FROM employee INNER JOIN role ON role.id = employee.role_id WHERE role.title = 'Manager'
+    //waits for promise to be resolved where if it resolves all info is displayed
+
     const managers = await new Promise (resolve => db.query("SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS TITLE FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.title='Manager'", function(err,res) {
         resolve(res)
     }));
-
-    //store all the roles
-    //waits for promise to be resolved where it resolves when all info is found from roles
+    console.log("MANAGERS", managers);
+    //store all the roles, used to create dropdown menu allowing user to select a role
     const roles = await new Promise (resolve => db.query("SELECT * FROM role", function(err,res) {
         resolve(res)    
     }));
-
-    //store all employees
+    //store all employees used to create dropdown menu allowing user to select
 
     const employees = await new Promise (resolve => db.query("SELECT * FROM employee", function(err,res) {
         resolve(res)    
     }));
-    //store all the departments
+    //store all the departments used to create dropdown menu
     const departments = await new Promise (resolve => db.query("SELECT * FROM department", function(err,res) {
         resolve(res)    
     }));
 
-    // console.log("EMPLOYEES", employees);
-    // console.log("ROLES", roles);
-    // console.log("MANAGERS", managers);
-    // console.log("DEPARTMENTS", departments);
+    //user can selec to view employees, add employee, update, view all roles, add role, view all departments, add department
     inquirer.prompt([
         {
             message: "Welcome! What do you want to do?",
@@ -50,8 +47,11 @@ const employeeManagement = async () => {
         
         switch(response.choice) {
 // show all the employees if user selected "View All Employees"
+//join employee with role to see first name, last name, title, salary and department name
+//LEFT JOIN appends everything from left side, since we are left joining role, we can reference the manager
             case "View All Employees":
-                db.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name AS department FROM employee LEFT JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id ORDER BY employee.id ", function (err, results) {
+                db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;", function (err, results) {
+                    console.log(err)
                     respond(() => console.table(results));
                 })
                 break;
@@ -98,13 +98,13 @@ const employeeManagement = async () => {
                     message: 'Which department does the new role belong to? \n\n',
                     name: 'employeeDepartment',
                     //return array of objects and inquirer uses it to select choice that gets stored as id
-                    //name is what is displayed, value is id
+                    //name is what is displayed, value is id of specific department
                     choices: departments.map(item => ({name: item.name, value: item.id}))
 
                  }
                 ]).then((response) => {
                     db.query(`INSERT INTO role(title,salary,department_id) VALUES ("${response.addRole}", "${response.addSalary}", "${response.employeeDepartment}")`, function (err, results) {
-                        console.log("DEPARMENT ERRORS", err);
+                        // console.log("DEPARMENT ERRORS", err);
                         respond(() => console.log('New role has been added to the database!'));
                 })
             })
@@ -125,12 +125,12 @@ const employeeManagement = async () => {
                  },
                  {
                     type:'list',
-                    message: 'Enter the employee role. \n\n',
+                    message: 'Select the employee role. \n\n',
                     name: 'employeeRole',
                     choices: roles.map(item => ({name: item.title, value: item.id}))
 
                  },
-//give user the option to add existing manager. using back ticks to combine 2 strings (first_name and last_name) to be 1 name!
+//give user the option to add existing manager
                  {
                     type:'list',
                     message: 'Enter the manager of the employee. \n\n',
