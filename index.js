@@ -47,7 +47,11 @@ const employeeManagement = async () => {
         switch(response.choice) {
 
 // show all the employees if user selected "View All Employees"
-//join employee with role to see first name, last name, title, salary and department name
+//join employee with role to see first name, last name, title, salary then
+// join with department to see department name and join with manager to see each manager
+//after last INNER JOIN, renamed employee to manager to correspond to manager table then
+//reference to manager inside of concat statement, now renamed as manager
+//this is done to distince manager from employee table
             case "View All Employees":
                 db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee INNER JOIN role on employee.role_id = role.id INNER JOIN department on role.department_id = department.id INNER JOIN employee manager on manager.id = employee.manager_id;", function (err, results) {
                     // console.log(err)
